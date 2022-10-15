@@ -10,13 +10,18 @@ let jogoDaVelha = new Array(9).fill(null)
 const i = 0;
 
 function imprimeJogo() {
-    console.log(jogoDaVelha[i] + ' | ' + jogoDaVelha[i + 1] + ' | ' + jogoDaVelha[i + 2]);
-    console.log(jogoDaVelha[i + 3] + ' | ' + jogoDaVelha[i + 4] + ' | ' + jogoDaVelha[i + 8]);
-    console.log(jogoDaVelha[i + 6] + ' | ' + jogoDaVelha[i + 7] + ' | ' + jogoDaVelha[i + 8]);
+    console.log("DIGITE O NUMERO PARA SELECIONAR SUA JOGADA")
+    console.log("  1  " + ' | ' + "  2  " + ' | ' + "  3  ");
+    console.log("  4  " + ' | ' + "  5  " + ' | ' + "  6  ");
+    console.log("  7  " + ' | ' + "  8  " + ' | ' + "  9  ");
 }
 
-let p1Move = function () {
-    return ("Digite o número correspondente para realizar a sua jogada | 1 a 9 ");
+let player1 = {
+    jogada: "X"
+}
+
+let player2 = {
+    jogada: "O"
 }
 
 imprimeJogo();
