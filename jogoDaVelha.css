@@ -1,0 +1,131 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+}
+
+body {
+    font-family: "sans-serif", "Arial Black";
+    color: darkcyan;
+}
+
+#jogo {
+    max-width: 1900px;
+    min-height: 700px;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+}
+
+h1 {
+    font-size: 50px;
+    font-weight: bold;
+}
+
+#voltar {
+    position: relative;
+    top: 10px;
+    width: 400px;
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50px;
+    border: 2px solid darkcyan;
+    margin-top: 10px;
+}
+
+#iniciaJogo {
+    position: relative;
+    top: 20px;
+    width: 400px;
+    min-height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 70px;
+    border: 2px solid darkcyan;
+    margin-top: 20px;
+}
+
+#iniciaJogoAi {
+    position: relative;
+    top: 20px;
+    width: 400px;
+    min-height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 70px;
+    border: 2px solid darkcyan;
+    margin-top: 20px;
+}
+
+#jogadores {
+    display: flex;
+    color: darkcyan;
+    font-size: 20px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+#tabuleiro {
+    color: chocolate;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    grid-gap: 0;
+    flex-grow: 1;
+    padding: 10px;
+}
+
+#x {
+    float: left;
+    width: 200px;
+}
+
+#x.active {
+    color: khaki;
+    border-color: khaki;
+}
+
+#o.active {
+    color: palegreen;
+    border-color: palegreen;
+}
+
+#o {
+    float: right;
+    width: 200px;
+}
+
+.quadrado {
+    min-width: 100px;
+    min-height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 60px;
+    cursor: pointer;
+}
+
+.quadrado:not(:nth-child(3n)) {
+    border-right: 3px solid gray;
+}
+
+.quadrado:not(:nth-last-child(-n +3)) {
+    border-bottom: 3px solid gray;
+}
+
+.x {
+    color: khaki;
+}
+
+.o {
+    color: palegreen;
+}
+
+.vencedor span{
+    color: indigo;
+}
