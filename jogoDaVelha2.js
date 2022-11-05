@@ -23,7 +23,8 @@ class JogoDaVelha {
         if (this.finalDeJogo()){
             return;
         }
-        if(this.tabuleiro[i]) {
+        if (this.tabuleiro[i] === "X" || this.tabuleiro[i] === "O") {
+            this.proximaJogada();
             return;
         }
         console.log(this.estado)
@@ -94,7 +95,6 @@ class JogoDaVelha {
         if(this.tabuleiro[i] === "X" || this.tabuleiro[i] === "O") {
             return;
         }
-        console.log("salvei");
         const clone = structuredClone(jogo)
         this.estado.push(clone.tabuleiro);
     }
@@ -108,9 +108,98 @@ class JogoDaVelhaIA {
     constructor() {
         this.tabuleiro = new Array(9).fill(null);
         this.jogada = "X";
-        this.estado = [[null,null,null,null,null,null,null,null,null]];
+        this.estado = [];
     }
 
+    // Alterna entre jogador X e jogador O
+    proximaJogadaIA() {
+        if (this.jogada === "X") {
+            this.jogada = "O";
+        } else {
+            this.jogada = "X";
+        }
+    }
+
+
+    fazerJogadaIA(i) {
+        if (this.finalDeJogo()){
+            return;
+        }
+        if(this.tabuleiro[i]) {
+            return;
+        }
+        console.log(this.estado)
+        console.log(this.tabuleiro)
+        this.tabuleiro[i] = this.jogada;
+    }
+
+    deuVelhaIA() {
+        this.tabuleiro.fill("😑");
+    }
+
+    // Verifica se há um vencedor
+    designarVencedor() {
+        const jogadasVitoria = [
+            [0,1,2],
+            [3,4,5],
+            [6,7,8],
+            [0,3,6],
+            [1,4,7],
+            [2,5,8],
+            [0,4,8],
+            [2,4,6]
+        ]
+
+        for (const vitoria of jogadasVitoria) {
+            const [x,y,z] = vitoria;
+
+            if (this.tabuleiro[x] &&
+                (this.tabuleiro[x] === this.tabuleiro[y] && this.tabuleiro[x] === this.tabuleiro[z])) {
+                return vitoria;
+            }
+        }
+        return null;
+    }
+
+    voltarJogadaIA() {
+        if (isEqual(this.tabuleiro, [null, null, null, null, null, null, null, null, null])) {
+            return;
+        }
+        try {
+            if (this.estado.length === 0) {
+                this.tabuleiro = new Array(9).fill(null);
+                return;
+            }
+            this.tabuleiro = this.estado[this.estado.length - 1];
+            console.log(this.tabuleiro)
+            console.log(this.estado)
+            console.log(this.estado.length)
+            this.estado.pop();
+            this.proximaJogada()
+            return this;
+        } catch (err) {
+            console.log("Não é mais possivel voltar");
+        }
+    }
+
+    finalDeJogoIA() {
+        let jogadasVitoria = this.designarVencedor();
+        if (jogadasVitoria) {
+            console.log("Vitoria")
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    salvarIA(i) {
+        if(this.tabuleiro[i] === "X" || this.tabuleiro[i] === "O") {
+            return;
+        }
+        console.log("salvei");
+        const clone = structuredClone(jogo)
+        this.estado.push(clone.tabuleiro);
+    }
 }
 
 class JogoDaVelhaView {
@@ -118,13 +207,13 @@ class JogoDaVelhaView {
     }
 
     atualizaJogo(jogo) {
-        if (!jogo.tabuleiro.includes(null)  && !jogo.finalDeJogo() && !isEqual([null,null,null,null,null,null,null,null,null], jogo.tabuleiro)) {
+        if (!jogo.tabuleiro.includes(null) && !jogo.finalDeJogo() && !isEqual([null, null, null, null, null, null, null, null, null], jogo.tabuleiro)) {
             jogo.deuVelha();
         }
 
         this.atualizaTurno(jogo);
         const vitoria = jogo.designarVencedor();
-        for (let i=0; i < jogo.tabuleiro.length; i++) {
+        for (let i = 0; i < jogo.tabuleiro.length; i++) {
             const quadrado = document.querySelector(`.quadrado[data-index='${i}']`)
 
             quadrado.classList.remove("vencedor");
@@ -152,6 +241,15 @@ class JogoDaVelhaView {
             jogador2.classList.add('active')
         }
     }
+
+    async exibeVencedor(jogo) {
+        const vitoria = jogo.designarVencedor();
+        let vencedor;
+        if (vitoria) {
+            vencedor =  jogo.jogada === "X" ? "O" : "X";
+        }
+        return vencedor;
+    }
 }
 
 function adicionarJogada(i) {
@@ -171,22 +269,37 @@ function novoJogo() {
     jogoView.atualizaJogo(jogo);
 }
 
+function adicionarJogadaIA(i) {
+    jogoIA.salvarIA(i);
+    jogoIA.fazerJogadaIA(i);
+    jogoView.atualizaJogo(jogoIA);
+    jogoIA.proximaJogadaIA();
+}
+
+function voltarIA() {
+    jogoIA.voltarJogadaIA();
+    jogoView.atualizaJogo(jogoIA);
+}
+
 function novoJogoIA() {
-    jogo = new JogoDaVelhaIA();
-    jogoView.atualizaJogo(jogo);
+    jogoIA = new JogoDaVelhaIA();
+    jogoView.atualizaJogo(jogoIA);
 }
 
 let jogo = new JogoDaVelha();
 let jogoView = new JogoDaVelhaView();
+let jogoIA = new JogoDaVelhaIA();
+let tipoJogo = true;
 
 document.querySelector("#iniciaJogo")
     .addEventListener("click", () => {
         novoJogo();
     })
 
-document.querySelector("#iniciaJogoAi")
+document.querySelector("#iniciaJogoIA")
     .addEventListener("click", () => {
         novoJogoIA();
+        console.log(tipoJogo)
     })
 
 
@@ -197,11 +310,19 @@ document.querySelector("#voltar")
 
 let quadrados = document.querySelectorAll(".quadrado");
 
-quadrados.forEach((quadrado) => {
-    quadrado.addEventListener("click", () => {
-        adicionarJogada(quadrado.dataset.index);
+if (tipoJogo) {
+    quadrados.forEach((quadrado) => {
+        quadrado.addEventListener("click", () => {
+            adicionarJogada(quadrado.dataset.index);
+        })
     })
-})
+} else {
+    quadrados.forEach((quadrado) => {
+        quadrado.addEventListener("click", () => {
+            adicionarJogadaIA(quadrado.dataset.index);
+        })
+    })
+}
 
 function isEqual(a, b) {
     if(a.length!==b.length)
