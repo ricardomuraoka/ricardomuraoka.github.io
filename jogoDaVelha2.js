@@ -9,7 +9,7 @@ class JogoDaVelha {
         this.estado = [];
     }
 
-    // Altera o jogador a cada "jogada"
+    // Alterna entre jogador X e jogador O
     proximaJogada() {
         if (this.jogada === "X") {
             this.jogada = "O";
@@ -26,6 +26,8 @@ class JogoDaVelha {
         if(this.tabuleiro[i]) {
             return;
         }
+        console.log(this.estado)
+        console.log(this.tabuleiro)
         this.tabuleiro[i] = this.jogada;
     }
 
@@ -33,6 +35,7 @@ class JogoDaVelha {
         this.tabuleiro.fill("😑");
     }
 
+    // Verifica se há um vencedor
     designarVencedor() {
         const jogadasVitoria = [
             [0,1,2],
@@ -56,15 +59,56 @@ class JogoDaVelha {
         return null;
     }
 
-    finalDeJogo() {
-        console.log("Vitoria")
-        return !!this.designarVencedor();
+    voltarJogada() {
+        if (isEqual(this.tabuleiro, [null, null, null, null, null, null, null, null, null])) {
+            return;
+        }
+        try {
+            if (this.estado.length === 0) {
+                this.tabuleiro = new Array(9).fill(null);
+                return;
+            }
+            this.tabuleiro = this.estado[this.estado.length - 1];
+            console.log(this.tabuleiro)
+            console.log(this.estado)
+            console.log(this.estado.length)
+            this.estado.pop();
+            this.proximaJogada()
+            return this;
+        } catch (err) {
+            console.log("Não é mais possivel voltar");
+        }
     }
 
-    salvar() {
+    finalDeJogo() {
+        let jogadasVitoria = this.designarVencedor();
+        if (jogadasVitoria) {
+            console.log("Vitoria")
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    salvar(i) {
+        if(this.tabuleiro[i] === "X" || this.tabuleiro[i] === "O") {
+            return;
+        }
         console.log("salvei");
         const clone = structuredClone(jogo)
         this.estado.push(clone.tabuleiro);
+    }
+}
+
+class JogoDaVelhaIA {
+    tabuleiro;
+    jogada;
+    estado;
+
+    constructor() {
+        this.tabuleiro = new Array(9).fill(null);
+        this.jogada = "X";
+        this.estado = [[null,null,null,null,null,null,null,null,null]];
     }
 
 }
@@ -74,9 +118,10 @@ class JogoDaVelhaView {
     }
 
     atualizaJogo(jogo) {
-        if (!jogo.tabuleiro.includes(null) && !jogo.finalDeJogo()) {
+        if (!jogo.tabuleiro.includes(null)  && !jogo.finalDeJogo() && !isEqual([null,null,null,null,null,null,null,null,null], jogo.tabuleiro)) {
             jogo.deuVelha();
         }
+
         this.atualizaTurno(jogo);
         const vitoria = jogo.designarVencedor();
         for (let i=0; i < jogo.tabuleiro.length; i++) {
@@ -110,10 +155,15 @@ class JogoDaVelhaView {
 }
 
 function adicionarJogada(i) {
+    jogo.salvar(i);
     jogo.fazerJogada(i);
     jogoView.atualizaJogo(jogo);
-    jogo.salvar();
     jogo.proximaJogada();
+}
+
+function voltar() {
+    jogo.voltarJogada();
+    jogoView.atualizaJogo(jogo);
 }
 
 function novoJogo() {
@@ -121,12 +171,9 @@ function novoJogo() {
     jogoView.atualizaJogo(jogo);
 }
 
-function voltarJogada() {
-    if (jogo.estado.length >= 1) {
-        jogo.tabuleiro = jogo.estado[jogo.estado.length - 2];
-        jogo.estado.pop();
-        jogoView.atualizaJogo(jogo);
-    }
+function novoJogoIA() {
+    jogo = new JogoDaVelhaIA();
+    jogoView.atualizaJogo(jogo);
 }
 
 let jogo = new JogoDaVelha();
@@ -137,10 +184,15 @@ document.querySelector("#iniciaJogo")
         novoJogo();
     })
 
+document.querySelector("#iniciaJogoAi")
+    .addEventListener("click", () => {
+        novoJogoIA();
+    })
+
 
 document.querySelector("#voltar")
     .addEventListener("click", () => {
-        voltarJogada();
+        voltar();
     })
 
 let quadrados = document.querySelectorAll(".quadrado");
@@ -150,3 +202,14 @@ quadrados.forEach((quadrado) => {
         adicionarJogada(quadrado.dataset.index);
     })
 })
+
+function isEqual(a, b) {
+    if(a.length!==b.length)
+        return false;
+    else {
+        for(let i=0; i<a.length; i++)
+            if(a[i]!==b[i])
+                return false;
+        return true;
+    }
+}
