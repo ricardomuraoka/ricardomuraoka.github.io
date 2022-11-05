@@ -62,6 +62,16 @@ h1 {
     margin-top: 20px;
 }
 
+#jogador-vencedor {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: chartreuse;
+    font-size: 20px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
 #jogadores {
     display: flex;
     color: darkcyan;
