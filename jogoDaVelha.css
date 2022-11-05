@@ -5,7 +5,7 @@
 
 body {
     font-family: "sans-serif", "Arial Black";
-    color: darkcyan;
+    color: gray;
 }
 
 #jogo {
@@ -32,8 +32,14 @@ h1 {
     align-items: center;
     justify-content: center;
     border-radius: 50px;
-    border: 2px solid darkcyan;
+    border: 2px solid gray;
     margin-top: 10px;
+    cursor: pointer;
+}
+
+#voltar:hover {
+    background-color: gray;
+    color: white;
 }
 
 #iniciaJogo {
@@ -45,8 +51,14 @@ h1 {
     align-items: center;
     justify-content: center;
     border-radius: 70px;
-    border: 2px solid darkcyan;
+    border: 2px solid gray;
     margin-top: 20px;
+    cursor: pointer;
+}
+
+#iniciaJogo:hover {
+    background-color: gray;
+    color: white;
 }
 
 #iniciaJogoIA {
@@ -60,6 +72,12 @@ h1 {
     border-radius: 70px;
     border: 2px solid gray;
     margin-top: 20px;
+    cursor: pointer;
+}
+
+#iniciaJogoIA:hover {
+    background-color: gray;
+    color: white;
 }
 
 #jogador-vencedor {
@@ -101,8 +119,8 @@ h1 {
 }
 
 #o.active {
-    color: palegreen;
-    border-color: palegreen;
+    color: lightblue;
+    border-color: lightblue;
 }
 
 #o {
@@ -120,6 +138,11 @@ h1 {
     cursor: pointer;
 }
 
+.quadrado:hover {
+    background-color: lightgray;
+    color: white;
+}
+
 .quadrado:not(:nth-child(3n)) {
     border-right: 3px solid gray;
 }
@@ -133,7 +156,7 @@ h1 {
 }
 
 .o {
-    color: palegreen;
+    color: lightblue;
 }
 
 .vencedor span{
