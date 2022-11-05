@@ -31,7 +31,8 @@ class JogoDaVelha {
     }
 
     deuVelha() {
-        this.tabuleiro.fill("😑");
+        return !jogo.tabuleiro.includes(null) && !jogo.finalDeJogo() &&
+            !isEqual([null, null, null, null, null, null, null, null, null], jogo.tabuleiro);
     }
 
     // Verifica se há um vencedor
@@ -192,8 +193,9 @@ class JogoDaVelhaView {
     }
 
     atualizaJogo(jogo) {
-        if (!jogo.tabuleiro.includes(null) && !jogo.finalDeJogo() && !isEqual([null, null, null, null, null, null, null, null, null], jogo.tabuleiro)) {
-            jogo.deuVelha();
+        const deuVelha = jogo.deuVelha();
+        if (jogo.deuVelha()) {
+            jogo.tabuleiro.fill("😑");
         }
 
         this.atualizaTurno(jogo);
@@ -203,7 +205,7 @@ class JogoDaVelhaView {
             const jogadorVencedor = document.querySelector("#jogador-vencedor");
 
             quadrado.classList.remove("vencedor");
-            if (!vitoria) {
+            if (!vitoria && deuVelha) {
                 jogadorVencedor.innerHTML = `<h3 class=""></h3>`;
             }
 
@@ -212,8 +214,15 @@ class JogoDaVelhaView {
             quadrado.innerHTML = `<span class="${estiloQuadrado}">${jogo.tabuleiro[i] ? jogo.tabuleiro[i] : ""}</span>`
 
             if (vitoria && vitoria.includes(i)) {
-                jogadorVencedor.innerHTML = `<h3>O jogador ${jogo.jogada} venceu!</h3>`;
                 quadrado.classList.add("vencedor");
+            }
+
+            if (deuVelha === false && vitoria && vitoria.includes(i)) {
+                jogadorVencedor.innerHTML = `<h3>O jogador ${jogo.jogada} venceu!</h3>`;
+            }
+
+            if (deuVelha) {
+                jogadorVencedor.innerHTML = `<h3>Deu velha!</h3>`;
             }
         }
     }
