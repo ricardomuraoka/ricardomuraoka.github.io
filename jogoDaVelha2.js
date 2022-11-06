@@ -19,7 +19,7 @@ class JogoDaVelha {
     }
 
     turnoComputador() {
-        let jogadaComputador = Math.floor(Math.random() * 10);
+        let jogadaComputador = Math.floor(Math.random() * 9);
         if (this.tabuleiro[jogadaComputador] !== "X" && this.tabuleiro[jogadaComputador] !== "O") {
             return jogadaComputador;
         } else {
@@ -34,21 +34,24 @@ class JogoDaVelha {
         if (this.finalDeJogo()) {
             return;
         }
-        if (this.tabuleiro[i] === "X" || this.tabuleiro[i] === "O") {
-            this.proximaJogada();
+        if (tipoJogo === true && (this.tabuleiro[i] === "X" || this.tabuleiro[i] === "O")) {
             return;
         }
         if (tipoJogo === true) {
             this.tabuleiro[i] = this.jogada;
         } else {
-            if (this.jogada === "X") {
+            this.jogada = "X";
                 this.salvar(i);
                 this.tabuleiro[i] = this.jogada;
-                this.proximaJogada();
-                r = this.turnoComputador();
-                this.salvar(r);
-                this.tabuleiro[r] = this.jogada;
-            }
+                if (!this.finalDeJogo()) {
+                    this.proximaJogada();
+                    r = this.turnoComputador();
+                    this.salvar(r);
+                    this.tabuleiro[r] = this.jogada;
+                } else {
+                    this.deuVelha();
+                }
+
         }
         return r;
     }
@@ -93,10 +96,18 @@ class JogoDaVelha {
             this.tabuleiro = new Array(9).fill(null);
             return;
         }
-        this.tabuleiro = this.estado[this.estado.length - 1];
-        this.estado.pop();
-        this.proximaJogada()
-        return this;
+
+        if (tipoJogo === true) {
+            this.tabuleiro = this.estado[this.estado.length - 1];
+            this.estado.pop();
+            this.proximaJogada()
+            return this;
+        } else {
+            this.tabuleiro = this.estado[this.estado.length - 2];
+            this.estado.pop();
+            this.estado.pop();
+            return this;
+        }
     }
 
     finalDeJogo() {
