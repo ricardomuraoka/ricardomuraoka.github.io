@@ -38,24 +38,24 @@ class JogoDaVelha {
             return;
         }
         if (this.tabuleiro[i] === "X" || this.tabuleiro[i] === "O") {
+            this.proximaJogada();
             return;
         }
         if (tipoJogo === true) {
             this.tabuleiro[i] = this.jogada;
         } else {
             this.jogada = "X";
-                this.salvar(i);
-                this.tabuleiro[i] = this.jogada;
-                if (this.finalDeJogo()) {
-                    return;
-                } else {
-                    this.proximaJogada();
-                    r = this.turnoComputador();
-                    this.salvar(r);
-                    this.tabuleiro[r] = this.jogada;
-                }
+            this.salvar(i);
+            this.tabuleiro[i] = this.jogada;
+            if (this.finalDeJogo()) {
+                return;
+            } else {
+                this.proximaJogada();
+                r = this.turnoComputador();
+                this.salvar(r);
+                this.tabuleiro[r] = this.jogada;
+            }
         }
-        return r;
     }
 
     deuVelha() {
@@ -63,7 +63,7 @@ class JogoDaVelha {
             !isEqual([null, null, null, null, null, null, null, null, null], jogo.tabuleiro);
     }
 
-    // Verifica se há um vencedor
+    // Verifica se há um vencedor, e caso haja, retorna o vencedor.
     designarVencedor() {
         const jogadasVitoria = [
             [0, 1, 2],
@@ -102,7 +102,7 @@ class JogoDaVelha {
         if (tipoJogo === true) {
             this.tabuleiro = this.estado[this.estado.length - 1];
             this.estado.pop();
-            this.proximaJogada()
+            this.proximaJogada();
             return this;
         } else {
             this.estado.pop();
@@ -114,13 +114,15 @@ class JogoDaVelha {
         }
     }
 
+    // Retorna true caso haja um vencedor, false caso contrário.
     finalDeJogo() {
         let jogadasVitoria = this.designarVencedor();
         return !!jogadasVitoria;
     }
 
+    // Salva o estado atual do jogo, para que seja possível retornar jogadas.
     salvar(i) {
-        if(this.tabuleiro[i] === "X" || this.tabuleiro[i] === "O") {
+        if (this.tabuleiro[i] === "X" || this.tabuleiro[i] === "O") {
             return;
         }
         const clone = structuredClone(jogo)
@@ -128,6 +130,7 @@ class JogoDaVelha {
     }
 }
 
+// Gera a interação do nosso jogo em uma view visualizável.
 class JogoDaVelhaView {
     constructor() {
     }
@@ -194,7 +197,9 @@ function adicionarJogada(i) {
     jogo.salvar(i);
     jogo.fazerJogada(i);
     jogoView.atualizaJogo(jogo);
-    jogo.proximaJogada();
+    if (!jogo.finalDeJogo()) {
+        jogo.proximaJogada();
+    }
 }
 
 function voltar() {
@@ -207,10 +212,11 @@ function novoJogo() {
     jogoView.atualizaJogo(jogo);
 }
 
-let jogo = new JogoDaVelha();
-let jogoView = new JogoDaVelhaView();
-let tipoJogo = true;
+let jogo = new JogoDaVelha(); // Instancia um novo jogo.
+let jogoView = new JogoDaVelhaView(); // Instancia a view do jogo.
+let tipoJogo = true; // true = 1 jogador, false = 2 jogadores (Permite acompanhar o tipo de jogo)
 
+// Adiciona os eventos de click para iniciar um novo jogo modo 2 jogadores.
 document.querySelector("#iniciaJogo")
     .addEventListener("click", () => {
         novoJogo();
@@ -219,6 +225,7 @@ document.querySelector("#iniciaJogo")
         jogadorVencedor.innerHTML = `<h3 class=""></h3>`;
     })
 
+// Adiciona os eventos de click para iniciar um novo jogo modo 1 jogador.
 document.querySelector("#iniciaJogoIA")
     .addEventListener("click", () => {
         novoJogo();
@@ -227,14 +234,16 @@ document.querySelector("#iniciaJogoIA")
         jogadorVencedor.innerHTML = `<h3 class=""></h3>`;
     })
 
-
+// Adiciona os eventos de click para voltar uma jogada.
 document.querySelector("#voltar")
     .addEventListener("click", () => {
         voltar();
     })
 
+// Visão geral do tabuleiro (que dividem a classe "quadrado").
 let quadrados = document.querySelectorAll(".quadrado");
 
+// Adiciona os eventos de click para cada quadrado do tabuleiro.
 if (tipoJogo) {
     quadrados.forEach((quadrado) => {
         quadrado.addEventListener("click", () => {
@@ -249,12 +258,13 @@ if (tipoJogo) {
     })
 }
 
+// Permite definir se o tabuleiro é igual aos jogos salvos.
 function isEqual(a, b) {
-    if(a.length!==b.length)
+    if (a.length !== b.length)
         return false;
     else {
-        for(let i=0; i<a.length; i++)
-            if(a[i]!==b[i])
+        for (let i = 0; i < a.length; i++)
+            if (a[i] !== b[i])
                 return false;
         return true;
     }
