@@ -19,7 +19,6 @@ class JogoDaVelha {
     }
 
     turnoComputador() {
-        console.log(Math.floor(Math.random() * 9));
         let jogadaComputador = Math.floor(Math.random() * 10);
         if (this.tabuleiro[jogadaComputador] !== "X" && this.tabuleiro[jogadaComputador] !== "O") {
             return jogadaComputador;
@@ -31,8 +30,8 @@ class JogoDaVelha {
 
     // Imprime o quadrado do jogo da velha
     fazerJogada(i) {
-        let r = this.turnoComputador();
-        if (this.finalDeJogo()){
+        let r;
+        if (this.finalDeJogo()) {
             return;
         }
         if (this.tabuleiro[i] === "X" || this.tabuleiro[i] === "O") {
@@ -43,11 +42,20 @@ class JogoDaVelha {
             this.tabuleiro[i] = this.jogada;
         } else {
             if (this.jogada === "X") {
+                this.salvar(i);
                 this.tabuleiro[i] = this.jogada;
-                this.jogada = "O";
+                this.proximaJogada();
+                r = this.turnoComputador();
+                console.log(this.estado[this.estado.length - 1]);
+                this.salvar(r);
                 this.tabuleiro[r] = this.jogada;
+                this.proximaJogada();
+                console.log(this.estado.length);
+                console.log(this.estado[this.estado.length - 1]);
+
             }
         }
+        return r;
     }
 
     deuVelha() {
@@ -126,7 +134,14 @@ class JogoDaVelhaView {
             const quadrado = document.querySelector(`.quadrado[data-index='${i}']`)
             const jogadorVencedor = document.querySelector("#jogador-vencedor");
 
-            quadrado.classList.remove("vencedor");
+
+            if (quadrado !== null) {
+                quadrado.classList.remove("vencedor");
+            } else {
+                continue;
+            }
+
+
             if (!vitoria && deuVelha) {
                 jogadorVencedor.innerHTML = `<h3 class=""></h3>`;
             }
@@ -213,14 +228,12 @@ let quadrados = document.querySelectorAll(".quadrado");
 if (tipoJogo) {
     quadrados.forEach((quadrado) => {
         quadrado.addEventListener("click", () => {
-            console.log(tipoJogo);
             adicionarJogada(quadrado.dataset.index);
         })
     })
 } else {
     quadrados.forEach((quadrado) => {
         quadrado.addEventListener("click", () => {
-            console.log(tipoJogo);
             adicionarJogada(quadrado.dataset.index);
         })
     })
