@@ -19,6 +19,9 @@ class JogoDaVelha {
     }
 
     turnoComputador() {
+        if (this.deuVelha()) {
+            return;
+        }
         let jogadaComputador = Math.floor(Math.random() * 9);
         if (this.tabuleiro[jogadaComputador] !== "X" && this.tabuleiro[jogadaComputador] !== "O") {
             return jogadaComputador;
@@ -34,7 +37,7 @@ class JogoDaVelha {
         if (this.finalDeJogo()) {
             return;
         }
-        if (tipoJogo === true && (this.tabuleiro[i] === "X" || this.tabuleiro[i] === "O")) {
+        if (this.tabuleiro[i] === "X" || this.tabuleiro[i] === "O") {
             return;
         }
         if (tipoJogo === true) {
@@ -43,15 +46,14 @@ class JogoDaVelha {
             this.jogada = "X";
                 this.salvar(i);
                 this.tabuleiro[i] = this.jogada;
-                if (!this.finalDeJogo()) {
+                if (this.finalDeJogo()) {
+                    return;
+                } else {
                     this.proximaJogada();
                     r = this.turnoComputador();
                     this.salvar(r);
                     this.tabuleiro[r] = this.jogada;
-                } else {
-                    this.deuVelha();
                 }
-
         }
         return r;
     }
@@ -104,8 +106,14 @@ class JogoDaVelha {
             return this;
         } else {
             this.tabuleiro = this.estado[this.estado.length - 2];
+            console.log(this.estado[this.estado.length - 1]);
+            console.log(this.estado.length);
             this.estado.pop();
+            console.log(this.estado[this.estado.length - 1]);
+            console.log(this.estado.length);
             this.estado.pop();
+            console.log(this.estado[this.estado.length - 1]);
+            console.log(this.estado.length);
             return this;
         }
     }
