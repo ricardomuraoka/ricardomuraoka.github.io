@@ -35,6 +35,7 @@ class JogoDaVelha {
     fazerJogada(i) {
         let r;
         if (this.finalDeJogo()) {
+            this.proximaJogada();
             return;
         }
         if (this.tabuleiro[i] === "X" || this.tabuleiro[i] === "O") {
@@ -197,9 +198,7 @@ function adicionarJogada(i) {
     jogo.salvar(i);
     jogo.fazerJogada(i);
     jogoView.atualizaJogo(jogo);
-    if (!jogo.finalDeJogo()) {
-        jogo.proximaJogada();
-    }
+    jogo.proximaJogada();
 }
 
 function voltar() {
