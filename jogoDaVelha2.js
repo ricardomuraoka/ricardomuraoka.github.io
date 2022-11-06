@@ -46,13 +46,8 @@ class JogoDaVelha {
                 this.tabuleiro[i] = this.jogada;
                 this.proximaJogada();
                 r = this.turnoComputador();
-                console.log(this.estado[this.estado.length - 1]);
                 this.salvar(r);
                 this.tabuleiro[r] = this.jogada;
-                this.proximaJogada();
-                console.log(this.estado.length);
-                console.log(this.estado[this.estado.length - 1]);
-
             }
         }
         return r;
