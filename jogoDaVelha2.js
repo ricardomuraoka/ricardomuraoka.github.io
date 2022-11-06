@@ -105,15 +105,11 @@ class JogoDaVelha {
             this.proximaJogada()
             return this;
         } else {
-            this.tabuleiro = this.estado[this.estado.length - 2];
-            console.log(this.estado[this.estado.length - 1]);
-            console.log(this.estado.length);
             this.estado.pop();
-            console.log(this.estado[this.estado.length - 1]);
-            console.log(this.estado.length);
+            this.tabuleiro = this.estado[this.estado.length - 1];
             this.estado.pop();
-            console.log(this.estado[this.estado.length - 1]);
-            console.log(this.estado.length);
+            this.tabuleiro = this.estado[this.estado.length - 1];
+            this.estado.pop();
             return this;
         }
     }
