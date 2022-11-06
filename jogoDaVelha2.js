@@ -34,11 +34,7 @@ class JogoDaVelha {
     // Imprime o quadrado do jogo da velha
     fazerJogada(i) {
         let r;
-        if (this.finalDeJogo()) {
-            this.proximaJogada();
-            return;
-        }
-        if (this.tabuleiro[i] === "X" || this.tabuleiro[i] === "O") {
+        if (this.finalDeJogo() || (this.tabuleiro[i] === "X" || this.tabuleiro[i] === "O")) {
             this.proximaJogada();
             return;
         }
@@ -106,12 +102,19 @@ class JogoDaVelha {
             this.proximaJogada();
             return this;
         } else {
-            this.estado.pop();
-            this.tabuleiro = this.estado[this.estado.length - 1];
-            this.estado.pop();
-            this.tabuleiro = this.estado[this.estado.length - 1];
-            this.estado.pop();
-            return this;
+            let quantidadeNulos = this.tabuleiro.filter(x => x === null).length;
+            if (quantidadeNulos % 2 === 0) {
+                this.estado.pop();
+                this.tabuleiro = this.estado[this.estado.length - 1];
+                return this;
+            } else {
+                this.estado.pop();
+                this.tabuleiro = this.estado[this.estado.length - 1];
+                this.estado.pop();
+                this.tabuleiro = this.estado[this.estado.length - 1];
+                this.estado.pop();
+                return this;
+            }
         }
     }
 
