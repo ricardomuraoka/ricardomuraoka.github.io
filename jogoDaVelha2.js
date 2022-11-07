@@ -171,7 +171,7 @@ class JogoDaVelhaView {
                 quadrado.classList.add("vencedor");
             }
 
-            if (deuVelha === false && vitoria && vitoria.includes(i)) {
+            if (!jogo.tabuleiro.includes("😑") && deuVelha === false && vitoria && vitoria.includes(i)) {
                 jogadorVencedor.innerHTML = `<h3>O jogador ${jogo.jogada} venceu!</h3>`;
             }
 
