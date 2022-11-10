@@ -168,7 +168,6 @@ class JogoDaVelhaView {
             }
 
             if (!jogo.tabuleiro.includes("😑") && deuVelha === false && vitoria && vitoria.includes(i)) {
-                console.log(jogo.tabuleiro)
                 jogadorVencedor.innerHTML = `<h3>O jogador ${jogo.jogada} venceu!</h3>`;
             }
 
@@ -185,9 +184,9 @@ class JogoDaVelhaView {
         if (jogo.deuVelha() || jogo.designarVencedor() !== null) {
             document.querySelector("#x").style.backgroundColor = "white";
             document.querySelector("#o").style.backgroundColor = "white";
-        } else if(jogo.jogada === "O") {
+        } else if (jogo.jogada === "O") {
             document.querySelector("#x").style.backgroundColor = "khaki";
-        } else if(jogo.jogada === "X"){
+        } else if (jogo.jogada === "X") {
             document.querySelector("#o").style.backgroundColor = "lightblue";
         }
     }
@@ -218,6 +217,8 @@ let tipoJogo = true; // true = 1 jogador, false = 2 jogadores (Permite acompanha
 document.querySelector("#iniciaJogo")
     .addEventListener("click", () => {
         novoJogo();
+        document.querySelector("#x").style.backgroundColor = "khaki";
+        document.querySelector("#o").style.backgroundColor = "white";
         tipoJogo = true;
         const jogadorVencedor = document.querySelector("#jogador-vencedor");
         jogadorVencedor.innerHTML = `<h3 class=""></h3>`;
@@ -227,6 +228,8 @@ document.querySelector("#iniciaJogo")
 document.querySelector("#iniciaJogoIA")
     .addEventListener("click", () => {
         novoJogo();
+        document.querySelector("#x").style.backgroundColor = "khaki";
+        document.querySelector("#o").style.backgroundColor = "white";
         tipoJogo = false;
         const jogadorVencedor = document.querySelector("#jogador-vencedor");
         jogadorVencedor.innerHTML = `<h3 class=""></h3>`;
