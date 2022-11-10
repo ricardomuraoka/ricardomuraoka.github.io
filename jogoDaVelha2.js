@@ -44,14 +44,10 @@ class JogoDaVelha {
             this.jogada = "X";
             this.salvar(i);
             this.tabuleiro[i] = this.jogada;
-            if (this.finalDeJogo()) {
-                return;
-            } else {
-                this.proximaJogada();
-                r = this.turnoComputador();
-                this.salvar(r);
-                this.tabuleiro[r] = this.jogada;
-            }
+            this.proximaJogada();
+            r = this.turnoComputador();
+            this.salvar(r);
+            this.tabuleiro[r] = this.jogada;
         }
     }
 
@@ -172,6 +168,7 @@ class JogoDaVelhaView {
             }
 
             if (!jogo.tabuleiro.includes("😑") && deuVelha === false && vitoria && vitoria.includes(i)) {
+                console.log(jogo.tabuleiro)
                 jogadorVencedor.innerHTML = `<h3>O jogador ${jogo.jogada} venceu!</h3>`;
             }
 
@@ -182,17 +179,13 @@ class JogoDaVelhaView {
     }
 
     atualizaTurno(jogo) {
-        let jogador1 = document.querySelector("#x");
-        let jogador2 = document.querySelector("#o");
+        document.querySelector("#x").style.backgroundColor = "white";
+        document.querySelector("#o").style.backgroundColor = "white";
 
-        jogador1.classList.remove('active');
-        jogador2.classList.remove('active')
-
-
-        if (jogo.jogada === "X") {
-            jogador1.classList.add('active')
+        if (jogo.jogada === "O") {
+            document.querySelector("#x").style.backgroundColor = "khaki";
         } else {
-            jogador2.classList.add('active')
+            document.querySelector("#o").style.backgroundColor = "lightblue";
         }
     }
 }
