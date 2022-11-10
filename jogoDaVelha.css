@@ -8,19 +8,43 @@ body {
     color: gray;
 }
 
-#jogo {
-    max-width: 1900px;
-    min-height: 700px;
-    background-color: white;
+.container {
+    width: 100%;
+}
+
+.titulo {
+    position: relative;
+    top: 20px;
+    width: 400px;
+    min-height: 100px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0 auto;
+    border-radius: 10px;
+    border: 2px solid gray;
+    margin-top: 20px;
+}
+
+#jogo {
+    float: left;
+    width: auto;
+    height: auto;
+    background-color: white;
+    align-items: center;
+    justify-content: center;
+    display: inline-block;
 }
 
 h1 {
     font-size: 50px;
     font-weight: bold;
+}
+
+h3 {
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    margin: auto;
 }
 
 #voltar {
@@ -82,12 +106,13 @@ h1 {
 
 #jogador-vencedor {
     display: flex;
+    width: 400px;
     align-items: center;
     justify-content: center;
     color: chartreuse;
-    font-size: 20px;
+    font-size: 30px;
     margin-top: 30px;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
 }
 
 #jogadores {
@@ -99,7 +124,6 @@ h1 {
 }
 
 #tabuleiro {
-    color: chocolate;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
@@ -108,29 +132,74 @@ h1 {
     padding: 10px;
 }
 
-#x {
+.jogador-x {
+    display: block;
     float: left;
-    width: 200px;
-}
-
-#x.active {
+    width: auto;
+    height: auto;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
     color: khaki;
-    border-color: khaki;
 }
 
-#o.active {
+.jogador-o {
+    display: block;
+    float: left;
+    width: auto;
+    height: auto;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
     color: lightblue;
-    border-color: lightblue;
 }
+
+@keyframes animate {
+    0% {
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 0.7;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+#x {
+    display: flex;
+    width: 100px;
+    height: 100px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 70px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 300px;
+    animation: animate
+    1.5s linear infinite;
+}
+
 
 #o {
-    float: right;
-    width: 200px;
+    display: flex;
+    width: 100px;
+    height: 100px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 200px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 300px;
+    animation: animate
+    1.5s linear infinite;
 }
 
 .quadrado {
-    min-width: 100px;
-    min-height: 100px;
+    min-width: 120px;
+    min-height: 120px;
     display: flex;
     justify-content: center;
     align-items: center;
