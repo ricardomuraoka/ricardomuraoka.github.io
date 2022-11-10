@@ -6,36 +6,43 @@
     <link rel="stylesheet" href="./jogoDaVelha.css">
 </head>
 <body>
-    <div id="jogo">
-        <div>
-            <h1>Jogo da Velha</h1>
-            <div id="jogadores">
-                <div id="x" class="jogadores active">Jogador 1 (X)</div>
-                <div id="o" class="jogadores active">Jogador 2 (O)</div>
-            </div>
-            <div id ="jogador-vencedor"></div>
-            <div id ="tabuleiro">
-                <div class="quadrado" data-index="0"></div>
-                <div class="quadrado" data-index="1"></div>
-                <div class="quadrado" data-index="2"></div>
-                <div class="quadrado" data-index="3"></div>
-                <div class="quadrado" data-index="4"></div>
-                <div class="quadrado" data-index="5"></div>
-                <div class="quadrado" data-index="6"></div>
-                <div class="quadrado" data-index="7"></div>
-                <div class="quadrado" data-index="8"></div>
-            </div>
-            <div id = "voltar">
-                <h3>Voltar</h3>
-            </div>
-            <div id = "iniciaJogo">
-                <h3>Começar Jogo 2 jogadores</h3>
-            </div>
-            <div id = "iniciaJogoIA">
-                <h3>Começar Jogo com computador</h3>
+<div class="container">
+    <div class="jogador-x">
+        <h3>Jogador X</h3>
+    <div id="x" class="jogadores active"></div>
+    </div>
+        <div id="jogo">
+            <div>
+                <h1 class="titulo">Jogo da Velha</h1>
+                <div id="jogador-vencedor"></div>
+                <div id="tabuleiro">
+                    <div class="quadrado" data-index="0"></div>
+                    <div class="quadrado" data-index="1"></div>
+                    <div class="quadrado" data-index="2"></div>
+                    <div class="quadrado" data-index="3"></div>
+                    <div class="quadrado" data-index="4"></div>
+                    <div class="quadrado" data-index="5"></div>
+                    <div class="quadrado" data-index="6"></div>
+                    <div class="quadrado" data-index="7"></div>
+                    <div class="quadrado" data-index="8"></div>
+                </div>
+                <div id="voltar">
+                    <h3>Voltar</h3>
+                </div>
+                <div id="iniciaJogo">
+                    <h3>Começar Jogo 2 jogadores</h3>
+                </div>
+                <div id="iniciaJogoIA">
+                    <h3>Começar Jogo com computador</h3>
+                </div>
+
             </div>
         </div>
+    <div class="jogador-o">
+        <h3>Jogador O</h3>
+        <div id="o" class="jogadores active"></div>
     </div>
+</div>
 <script src="./jogoDaVelha2.js" type="module"></script>
 </body>
 </html>
