@@ -182,9 +182,12 @@ class JogoDaVelhaView {
         document.querySelector("#x").style.backgroundColor = "white";
         document.querySelector("#o").style.backgroundColor = "white";
 
-        if (jogo.jogada === "O") {
+        if (jogo.deuVelha() || jogo.designarVencedor() !== null) {
+            document.querySelector("#x").style.backgroundColor = "white";
+            document.querySelector("#o").style.backgroundColor = "white";
+        } else if(jogo.jogada === "O") {
             document.querySelector("#x").style.backgroundColor = "khaki";
-        } else {
+        } else if(jogo.jogada === "X"){
             document.querySelector("#o").style.backgroundColor = "lightblue";
         }
     }
